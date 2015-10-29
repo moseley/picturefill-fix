@@ -13,10 +13,10 @@ jQuery( document ).ready( function( $ ) {
 			last_src	= src;
 			
 			$.post(
-				wcrp.ajax_url,
+				pffwc.ajax_url,
 				{
 					action: 'get_srcset',
-					nonce: wcrp.nonce,
+					nonce: pffwc.nonce,
 					src: src
 				},
 				function( srcset ) {

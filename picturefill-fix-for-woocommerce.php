@@ -5,7 +5,7 @@ Description: Adds WP Retina 2x picturefill compatibility for WooCommerce variabl
 Version: 1.0.1
 Author: Jeremy Moseley
 License: GPLv2 or later
-Text Domain: pff
+Text Domain: pffwc
 */
 
 /*
@@ -36,8 +36,8 @@ $active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' 
 
 if ( in_array( 'woocommerce/woocommerce.php', $active_plugins ) && in_array( 'wp-retina-2x/wp-retina-2x.php', $active_plugins ) )  : 
 
-function pff_get_srcset_callback() {
-	if ( ! wp_verify_nonce( $_POST['nonce'], 'pff-nonce') ) {
+function pffwc_get_srcset_callback() {
+	if ( ! wp_verify_nonce( $_POST['nonce'], 'pffwc-nonce') ) {
 		wp_die();
 	}
 	$method = wr2x_getoption( 'method', 'wr2x_advanced', 'Picturefill' );
@@ -57,28 +57,28 @@ function pff_get_srcset_callback() {
 	wp_die();
 }
 
-add_action( 'wp_ajax_get_srcset', 'pff_get_srcset_callback' );
-add_action( 'wp_ajax_nopriv_get_srcset', 'pff_get_srcset_callback' );
+add_action( 'wp_ajax_get_srcset', 'pffwc_get_srcset_callback' );
+add_action( 'wp_ajax_nopriv_get_srcset', 'pffwc_get_srcset_callback' );
 
-function pff_enqueue_scripts() { 
+function pffwc_enqueue_scripts() { 
 	
 	wp_enqueue_script(
-		'pff', 
-		plugins_url( '/js/pff.min.js', __FILE__ ), 
+		'pffwc', 
+		plugins_url( '/js/pffwc.min.js', __FILE__ ), 
 		array( 'jquery' ), 
 		false, 
 		true
 	);
 	wp_localize_script(
-		'pff',
-		'pff',
+		'pffwc',
+		'pffwc',
 		array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'nonce' => wp_create_nonce( 'pff-nonce' )
+			'nonce' => wp_create_nonce( 'pffwc-nonce' )
 		)
 	);
    
 } 
-add_action( 'wp_enqueue_scripts', 'pff_enqueue_scripts' ); 
+add_action( 'wp_enqueue_scripts', 'pffwc_enqueue_scripts' ); 
 
 endif;
