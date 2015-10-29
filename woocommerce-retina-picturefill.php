@@ -1,11 +1,11 @@
 <?php 
 /* 
-Plugin Name: WooCommerce Variation Picturefill
-Description: Support for WooCommerce Variation Product image switching when the Picturefill method is being through WP Retina 2x
+Plugin Name: WooCommerce Retina Picturefill
+Description: Adds WP Retina 2x picturefill compatibility for WooCommerce variable product images.
 Version: 1.0.0
 Author: Jeremy Moseley
 License: GPLv2 or later
-Text Domain: wcvp
+Text Domain: wcrp
 */
 
 /*
@@ -36,8 +36,8 @@ $active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' 
 
 if ( in_array( 'woocommerce/woocommerce.php', $active_plugins ) && in_array( 'wp-retina-2x/wp-retina-2x.php', $active_plugins ) )  : 
 
-function wcvp_get_srcset_callback() {
-	if ( ! wp_verify_nonce( $_POST['nonce'], 'wcvp-nonce') ) {
+function wcrp_get_srcset_callback() {
+	if ( ! wp_verify_nonce( $_POST['nonce'], 'wcrp-nonce') ) {
 		wp_die();
 	}
 	$method = wr2x_getoption( 'method', 'wr2x_advanced', 'Picturefill' );
@@ -57,28 +57,28 @@ function wcvp_get_srcset_callback() {
 	wp_die();
 }
 
-add_action( 'wp_ajax_get_srcset', 'wcvp_get_srcset_callback' );
-add_action( 'wp_ajax_nopriv_get_srcset', 'wcvp_get_srcset_callback' );
+add_action( 'wp_ajax_get_srcset', 'wcrp_get_srcset_callback' );
+add_action( 'wp_ajax_nopriv_get_srcset', 'wcrp_get_srcset_callback' );
 
 function wcvp_enqueue_scripts() { 
 	
 	wp_enqueue_script(
-		'wcvp', 
-		plugins_url( '/js/wcvp.min.js', __FILE__ ), 
+		'wcrp', 
+		plugins_url( '/js/wcrp.min.js', __FILE__ ), 
 		array( 'jquery' ), 
 		false, 
 		true
 	);
 	wp_localize_script(
-		'wcvp',
-		'wcvp',
+		'wcrp',
+		'wcrp',
 		array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'nonce' => wp_create_nonce( 'wcvp-nonce' )
+			'nonce' => wp_create_nonce( 'wcrp-nonce' )
 		)
 	);
    
 } 
-add_action( 'wp_enqueue_scripts', 'wcvp_enqueue_scripts' ); 
+add_action( 'wp_enqueue_scripts', 'wcrp_enqueue_scripts' ); 
 
 endif;
