@@ -1,11 +1,11 @@
 <?php 
 /* 
-Plugin Name: WooCommerce Retina Picturefill
+Plugin Name: Picturefill fix for WooCommerce
 Description: Adds WP Retina 2x picturefill compatibility for WooCommerce variable product images.
-Version: 1.0.0
+Version: 1.0.1
 Author: Jeremy Moseley
 License: GPLv2 or later
-Text Domain: wcrp
+Text Domain: pff
 */
 
 /*
@@ -36,8 +36,8 @@ $active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' 
 
 if ( in_array( 'woocommerce/woocommerce.php', $active_plugins ) && in_array( 'wp-retina-2x/wp-retina-2x.php', $active_plugins ) )  : 
 
-function wcrp_get_srcset_callback() {
-	if ( ! wp_verify_nonce( $_POST['nonce'], 'wcrp-nonce') ) {
+function pff_get_srcset_callback() {
+	if ( ! wp_verify_nonce( $_POST['nonce'], 'pff-nonce') ) {
 		wp_die();
 	}
 	$method = wr2x_getoption( 'method', 'wr2x_advanced', 'Picturefill' );
@@ -47,7 +47,7 @@ function wcrp_get_srcset_callback() {
 		if ( $retina_url != null ) {
 			$retina_url = wr2x_cdn_this( $retina_url );
 			$img_url = wr2x_cdn_this( $_POST['src'] );
-			$img_url  = apply_filters( 'wr2x_img_url', $img_url  );
+			$img_url  = apply_filters( 'wr2x_img_url', $img_url );
 			echo  "$img_url, $retina_url 2x";	
 		}
 		else {
@@ -57,28 +57,28 @@ function wcrp_get_srcset_callback() {
 	wp_die();
 }
 
-add_action( 'wp_ajax_get_srcset', 'wcrp_get_srcset_callback' );
-add_action( 'wp_ajax_nopriv_get_srcset', 'wcrp_get_srcset_callback' );
+add_action( 'wp_ajax_get_srcset', 'pff_get_srcset_callback' );
+add_action( 'wp_ajax_nopriv_get_srcset', 'pff_get_srcset_callback' );
 
-function wcvp_enqueue_scripts() { 
+function pff_enqueue_scripts() { 
 	
 	wp_enqueue_script(
-		'wcrp', 
-		plugins_url( '/js/wcrp.min.js', __FILE__ ), 
+		'pff', 
+		plugins_url( '/js/pff.min.js', __FILE__ ), 
 		array( 'jquery' ), 
 		false, 
 		true
 	);
 	wp_localize_script(
-		'wcrp',
-		'wcrp',
+		'pff',
+		'pff',
 		array(
 			'ajax_url' => admin_url( 'admin-ajax.php' ),
-			'nonce' => wp_create_nonce( 'wcrp-nonce' )
+			'nonce' => wp_create_nonce( 'pff-nonce' )
 		)
 	);
    
 } 
-add_action( 'wp_enqueue_scripts', 'wcrp_enqueue_scripts' ); 
+add_action( 'wp_enqueue_scripts', 'pff_enqueue_scripts' ); 
 
 endif;
