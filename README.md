@@ -2,7 +2,7 @@
 * Contributors: jeremymoseley
 * Donate Link: https://www.paypal.me/jeremymoseley
 * Tags: woocommerce, wp-retina-2x, picturefill, variable product, retina
-* Requires at least: 3.2
+* Requires at least: 4.1
 * Tested up to: 4.3.1
 * Stable tag: 1.0.0
 * License: GPLv2 or later
