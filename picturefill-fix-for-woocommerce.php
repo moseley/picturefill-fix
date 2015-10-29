@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Picturefill fix for WooCommerce
 Description: Adds WP Retina 2x picturefill compatibility for WooCommerce variable product images.
-Version: 1.0.1
+Version: 1.0.0
 Author: Jeremy Moseley
 License: GPLv2 or later
 Text Domain: pffwc
